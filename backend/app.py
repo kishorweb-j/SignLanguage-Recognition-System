@@ -1,6 +1,7 @@
 import sys
 from pathlib import Path
 import base64
+import os
 
 # =========================================================
 # PROJECT ROOT
@@ -45,6 +46,7 @@ app = Flask(
     static_url_path=""
 )
 
+# Allow frontend requests from Firebase Hosting
 CORS(app)
 
 
@@ -111,27 +113,34 @@ def recognize():
     )
 
     if not image_data:
-
         return jsonify({
             "error": "No image supplied"
         }), 400
 
     try:
 
+        # -------------------------------------------------
         # Remove data URL prefix
-        if "," in image_data:
+        # -------------------------------------------------
 
+        if "," in image_data:
             image_data = image_data.split(
                 ",",
                 1
             )[1]
 
-        # Base64 → bytes
+        # -------------------------------------------------
+        # Base64 → Bytes
+        # -------------------------------------------------
+
         raw = base64.b64decode(
             image_data
         )
 
-        # Bytes → OpenCV image
+        # -------------------------------------------------
+        # Bytes → OpenCV Image
+        # -------------------------------------------------
+
         frame = cv2.imdecode(
             np.frombuffer(
                 raw,
@@ -141,12 +150,14 @@ def recognize():
         )
 
         if frame is None:
-
             return jsonify({
                 "error": "Invalid image"
             }), 400
 
-        # Computer Vision recognition
+        # -------------------------------------------------
+        # Computer Vision Recognition
+        # -------------------------------------------------
+
         result = recognize_frame(
             frame
         )
@@ -171,16 +182,26 @@ def recognize():
 
 if __name__ == "__main__":
 
+    # Render provides PORT through environment variable.
+    # Local development falls back to port 5000.
+
+    port = int(
+        os.environ.get(
+            "PORT",
+            5000
+        )
+    )
+
     print("=" * 60)
     print("SignVoice - Sign Language Recognition System")
     print("=" * 60)
-    print("Frontend : http://127.0.0.1:5000")
-    print("Health   : http://127.0.0.1:5000/api/health")
-    print("API      : http://127.0.0.1:5000/api/recognize")
+    print(f"Server Port : {port}")
+    print("Health      : /api/health")
+    print("Recognition : /api/recognize")
     print("=" * 60)
 
     app.run(
-        host="127.0.0.1",
-        port=5000,
-        debug=True
+        host="0.0.0.0",
+        port=port,
+        debug=False
     )

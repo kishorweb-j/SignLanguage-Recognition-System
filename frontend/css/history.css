@@ -1,0 +1,1 @@
+.history-list{padding:10px 22px;border-radius:24px}.history-row{display:grid;grid-template-columns:1fr 120px 180px;gap:20px;align-items:center;padding:18px 5px;border-bottom:1px solid var(--border)}.history-row:last-child{border-bottom:0}.history-row strong{font-size:16px}.history-row small{color:var(--muted)}

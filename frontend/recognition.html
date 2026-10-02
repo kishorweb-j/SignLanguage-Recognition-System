@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Recognition | SignVoice</title>
+<link rel="stylesheet" href="css/global.css"><link rel="stylesheet" href="css/recognition.css"><link rel="stylesheet" href="css/responsive.css">
+</head>
+<body>
+<header class="navbar"><a class="brand" href="index.html">✋ SignVoice</a>
+<nav><a href="index.html">Home</a><a class="active" href="recognition.html">Recognize</a><a href="dictionary.html">Dictionary</a><a href="history.html">History</a><a href="login.html" id="navAuth">Login</a></nav></header>
+<main class="recognition-page">
+<section class="page-heading"><p class="eyebrow">LIVE COMPUTER VISION</p><h1>Sign Recognition</h1><p>Place your hand inside the frame and start the camera.</p></section>
+<section class="recognition-grid">
+<div class="camera-panel glass"><div class="camera-wrap"><video id="video" autoplay playsinline muted></video><canvas id="canvas" width="640" height="480" hidden></canvas><div class="guide"></div><div id="cameraStatus" class="camera-status">Camera stopped</div></div>
+<div class="controls"><button class="btn primary" id="startCamera">Start Camera</button><button class="btn secondary" id="recognizeBtn" disabled>Recognize Sign</button><button class="btn ghost" id="stopCamera">Stop</button></div><p id="errorBox" class="error"></p></div>
+<aside class="result-panel glass"><p class="eyebrow">RECOGNITION RESULT</p><div class="result-label" id="resultLabel">—</div>
+<div class="confidence"><div class="confidence-head"><span>Confidence</span><strong id="confidence">0%</strong></div><div class="bar"><i id="confidenceBar"></i></div></div>
+<div class="feature-list"><div><span>Finger count</span><strong id="fingerCount">—</strong></div><div><span>Contour area</span><strong id="area">—</strong></div><div><span>Solidity</span><strong id="solidity">—</strong></div></div>
+<div class="voice-actions"><button class="btn primary full" id="speakBtn" disabled>🔊 Speak Result</button><button class="btn secondary full" id="saveBtn" disabled>Save to History</button></div>
+<p class="hint">Browser Text-to-Speech is used for voice output.</p></aside>
+</section></main>
+<script type="module" src="js/recognition.js"></script>
+</body></html>
